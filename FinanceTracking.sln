@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAL", "BAL\BAL.csproj", "{D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{11061B06-233D-4A6A-A141-10EB9B6887A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMetaData", "ProjectMetaData\ProjectMetaData.csproj", "{1F09A0D4-1E19-4E96-9FCE-6599FFD02A4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{11061B06-233D-4A6A-A141-10EB9B6887A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11061B06-233D-4A6A-A141-10EB9B6887A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11061B06-233D-4A6A-A141-10EB9B6887A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F09A0D4-1E19-4E96-9FCE-6599FFD02A4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F09A0D4-1E19-4E96-9FCE-6599FFD02A4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F09A0D4-1E19-4E96-9FCE-6599FFD02A4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F09A0D4-1E19-4E96-9FCE-6599FFD02A4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
