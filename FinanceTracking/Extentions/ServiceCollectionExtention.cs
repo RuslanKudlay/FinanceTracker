@@ -1,0 +1,14 @@
+﻿using BAL.Services;
+using BAL.Services.Interfaces;
+
+namespace FinanceTracking.Extentions;
+
+public static class ServiceCollectionExtention
+{
+    public static IServiceCollection AddDI(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<IAuthService, AuthService>();
+
+        return serviceCollection;
+    }
+}
