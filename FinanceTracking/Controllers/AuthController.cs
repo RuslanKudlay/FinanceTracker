@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(typeof(ActionResultDto<AuthResponseDto>),
         StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ActionResultDto<AuthResponseDto>),
-        StatusCodes.Status403Forbidden)]
+        StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ActionResultDto<AuthResponseDto>),
         StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Login([FromBody] AuthRequestDto dto)
