@@ -13,4 +13,16 @@ public class Enums
         Income, //прибуток 
         Expense, //витрати
     }
+    
+    public enum DataType
+    {
+        Decimal,
+        DateTime,
+        Integer,
+        String,
+        Date,
+        Time,
+        ListString,
+        Bool
+    }
 }

@@ -10,6 +10,7 @@ public static class ServiceCollectionExtention
         serviceCollection.AddScoped<IAuthService, AuthService>();
 
         serviceCollection.AddScoped<IUserService, UserService>();
+        serviceCollection.AddScoped<ISettingService, SettingService>();
         serviceCollection.AddScoped<ICategoryService, CategoryService>();
         serviceCollection.AddScoped<ITransactionService, TransactionService>();
 
