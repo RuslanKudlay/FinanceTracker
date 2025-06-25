@@ -9,6 +9,10 @@ public static class ServiceCollectionExtention
     {
         serviceCollection.AddScoped<IAuthService, AuthService>();
 
+        serviceCollection.AddScoped<IUserService, UserService>();
+        serviceCollection.AddScoped<ICategoryService, CategoryService>();
+        serviceCollection.AddScoped<ITransactionService, TransactionService>();
+
         return serviceCollection;
     }
 }
