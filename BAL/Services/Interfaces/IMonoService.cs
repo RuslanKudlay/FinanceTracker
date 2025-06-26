@@ -1,6 +1,8 @@
-﻿namespace BAL.Services.Interfaces;
+﻿using DAL.Entities.Mono;
+
+namespace BAL.Services.Interfaces;
 
 public interface IMonoService
 {
-    Task<string> Get();
+    Task<Client> GetBalance();
 }
