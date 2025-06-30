@@ -1,10 +1,13 @@
-﻿namespace DAL;
+﻿using System.Text.Json.Serialization;
+
+namespace DAL;
 
 public class BaseEntity
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    [JsonIgnore]
+    public Guid Id { get; set; }
         
-    public DateTime? DateCreate { get; set; }
+    public DateTime? DateCreate { get; set; } = DateTime.UtcNow;
     public DateTime? DateUpdate { get; set; }
     public bool? IsDeleted { get; set; } = false;
 }

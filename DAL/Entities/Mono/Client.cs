@@ -18,4 +18,7 @@ public class Client : BaseEntity
     
     [JsonPropertyName("accounts")]
     public List<Account> Accounts { get; set; }
+    
+    public Guid UserId { get; set; }
+    public User User { get; set; }
 }

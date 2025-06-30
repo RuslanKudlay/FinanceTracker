@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250625124938_AddedSettingAndMonoEntitys")]
-    partial class AddedSettingAndMonoEntitys
+    [Migration("20250630133641_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,27 +75,29 @@ namespace DAL.Migrations
                     b.Property<int>("Balance")
                         .HasColumnType("integer")
                         .HasColumnName("Balance")
-                        .HasComment("Баланс");
+                        .HasComment("Баланс")
+                        .HasAnnotation("Relational:JsonPropertyName", "balance");
 
                     b.Property<string>("CashbackType")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("CashbackType")
-                        .HasComment("UAH, DOL, EURO...");
+                        .HasComment("UAH, DOL, EURO...")
+                        .HasAnnotation("Relational:JsonPropertyName", "cashbackType");
 
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("CreditLimit")
                         .HasColumnType("integer")
                         .HasColumnName("CreditLimit")
-                        .HasComment("Кредитний ліміт");
+                        .HasComment("Кредитний ліміт")
+                        .HasAnnotation("Relational:JsonPropertyName", "creditLimit");
 
                     b.Property<int>("CurrencyCode")
                         .HasColumnType("integer")
                         .HasColumnName("CurrencyCode")
-                        .HasComment("Код валюти");
+                        .HasComment("Код валюти")
+                        .HasAnnotation("Relational:JsonPropertyName", "currencyCode");
 
                     b.Property<DateTime?>("DateCreate")
                         .HasColumnType("timestamp without time zone")
@@ -111,7 +113,8 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Iban")
-                        .HasComment("Номер IBAN");
+                        .HasComment("Номер IBAN")
+                        .HasAnnotation("Relational:JsonPropertyName", "iban");
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("boolean")
@@ -122,7 +125,13 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("MaskedPan")
-                        .HasComment("Масковані номери карт");
+                        .HasComment("Масковані номери карт")
+                        .HasAnnotation("Relational:JsonPropertyName", "maskedPan");
+
+                    b.Property<string>("MonoClientId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasAnnotation("Relational:JsonPropertyName", "clientId");
 
                     b.Property<string>("MonoId")
                         .IsRequired()
@@ -135,19 +144,23 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("SendId")
-                        .HasComment("SendId");
+                        .HasComment("SendId")
+                        .HasAnnotation("Relational:JsonPropertyName", "sendId");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Type")
-                        .HasComment("Тип карти");
+                        .HasComment("Тип карти")
+                        .HasAnnotation("Relational:JsonPropertyName", "type");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
                     b.ToTable("Accounts", (string)null);
+
+                    b.HasAnnotation("Relational:JsonPropertyName", "accounts");
                 });
 
             modelBuilder.Entity("DAL.Entities.Mono.Client", b =>
@@ -162,7 +175,8 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("ClientId")
-                        .HasComment("ClientId");
+                        .HasComment("ClientId")
+                        .HasAnnotation("Relational:JsonPropertyName", "clientId");
 
                     b.Property<DateTime?>("DateCreate")
                         .HasColumnType("timestamp without time zone")
@@ -183,21 +197,31 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Name")
-                        .HasComment("Name");
+                        .HasComment("Name")
+                        .HasAnnotation("Relational:JsonPropertyName", "name");
 
                     b.Property<string>("Permissions")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Permissions")
-                        .HasComment("Permissions");
+                        .HasComment("Permissions")
+                        .HasAnnotation("Relational:JsonPropertyName", "permissions");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("UserId")
+                        .HasComment("UserId");
 
                     b.Property<string>("WebHookUrl")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("WebHookUrl")
-                        .HasComment("WebHookUrl");
+                        .HasComment("WebHookUrl")
+                        .HasAnnotation("Relational:JsonPropertyName", "webHookUrl");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Clients", (string)null);
                 });
@@ -378,11 +402,21 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Mono.Client", "Client")
                         .WithMany("Accounts")
                         .HasForeignKey("ClientId")
-                        .HasPrincipalKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Mono.Client", b =>
+                {
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DAL.Entities.Setting", b =>

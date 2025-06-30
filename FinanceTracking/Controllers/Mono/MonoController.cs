@@ -12,10 +12,12 @@ namespace FinanceTracking.Controllers.Mono;
 public class MonoController : ControllerBase
 {
     private readonly IMonoService _monoService;
+    private readonly IClientService _clientService;
 
-    public MonoController(IMonoService monoService)
+    public MonoController(IMonoService monoService, IClientService clientService)
     {
         _monoService = monoService;
+        _clientService = clientService;
     }
 
     [HttpGet]
@@ -24,10 +26,12 @@ public class MonoController : ControllerBase
     {
         try
         {
-            var data = await _monoService.GetBalance();
+            var client = await _monoService.GetBalanceAsync();
+            await _clientService.CreateOrUpdateClientFromMonoAsync(client);
+            
             return Ok(new ActionResultDto<Client>()
             {
-                Data = data
+                Data = client
             });
         }
         catch (Exception e)

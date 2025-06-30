@@ -15,6 +15,8 @@ public static class ServiceCollectionExtention
         serviceCollection.AddScoped<ICategoryService, CategoryService>();
         serviceCollection.AddScoped<ITransactionService, TransactionService>();
 
+        serviceCollection.AddScoped<IClientService, ClientService>();
+
         return serviceCollection;
     }
 }

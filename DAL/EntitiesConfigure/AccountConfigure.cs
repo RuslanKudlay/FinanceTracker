@@ -26,10 +26,9 @@ public static class AccountConfigure
         modelBuilder.Entity<Account>().Property(account => account.Iban).HasColumnName("Iban").HasComment("Номер IBAN");
         
         modelBuilder.Entity<Account>()
-            .HasOne(account => account.Client)
-            .WithMany(client => client.Accounts)
-            .HasForeignKey(account => account.ClientId)
-            .HasPrincipalKey(client => client.ClientId);
+            .HasOne(a => a.Client)
+            .WithMany(c => c.Accounts)
+            .HasForeignKey(a => a.ClientGuidId);
 
         modelBuilder.Entity<Account>()
             .Property(account => account.MaskedPan)

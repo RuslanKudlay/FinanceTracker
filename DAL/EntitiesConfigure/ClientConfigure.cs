@@ -19,6 +19,8 @@ public static class ClientConfigure
         modelBuilder.Entity<Client>().Property(client => client.WebHookUrl).HasColumnName("WebHookUrl").HasComment("WebHookUrl");
         modelBuilder.Entity<Client>().Property(client => client.Permissions).HasColumnName("Permissions").HasComment("Permissions");
         
+        modelBuilder.Entity<Client>().Property(client => client.UserId).HasColumnName("UserId").HasComment("UserId");
+        
         modelBuilder.Entity<Client>()
             .HasKey(client => client.Id);
 
