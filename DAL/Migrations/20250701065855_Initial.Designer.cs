@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250630133641_Initial")]
+    [Migration("20250701065855_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -128,25 +128,6 @@ namespace DAL.Migrations
                         .HasComment("Масковані номери карт")
                         .HasAnnotation("Relational:JsonPropertyName", "maskedPan");
 
-                    b.Property<string>("MonoClientId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasAnnotation("Relational:JsonPropertyName", "clientId");
-
-                    b.Property<string>("MonoId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("MonoId")
-                        .HasComment("Id акаунту в mono")
-                        .HasAnnotation("Relational:JsonPropertyName", "id");
-
-                    b.Property<string>("SendId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("SendId")
-                        .HasComment("SendId")
-                        .HasAnnotation("Relational:JsonPropertyName", "sendId");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text")
@@ -170,13 +151,6 @@ namespace DAL.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("Id")
                         .HasComment("Первинний ключ");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("ClientId")
-                        .HasComment("ClientId")
-                        .HasAnnotation("Relational:JsonPropertyName", "clientId");
 
                     b.Property<DateTime?>("DateCreate")
                         .HasColumnType("timestamp without time zone")

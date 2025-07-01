@@ -15,9 +15,7 @@ public static class AccountConfigure
         modelBuilder.Entity<Account>().Property(account => account.DateCreate).HasColumnName("DateCreate").HasComment("Дата створення");
         modelBuilder.Entity<Account>().Property(account => account.DateUpdate).HasColumnName("DateUpdate").HasComment("Дата оновлення");
         modelBuilder.Entity<Account>().Property(account => account.IsDeleted).HasColumnName("IsDeleted").HasComment("Прапор видалення");
-
-        modelBuilder.Entity<Account>().Property(account => account.MonoId).HasColumnName("MonoId").HasComment("Id акаунту в mono");
-        modelBuilder.Entity<Account>().Property(account => account.SendId).HasColumnName("SendId").HasComment("SendId");
+        
         modelBuilder.Entity<Account>().Property(account => account.CurrencyCode).HasColumnName("CurrencyCode").HasComment("Код валюти");
         modelBuilder.Entity<Account>().Property(account => account.CashbackType).HasColumnName("CashbackType").HasComment("UAH, DOL, EURO...");
         modelBuilder.Entity<Account>().Property(account => account.Balance).HasColumnName("Balance").HasComment("Баланс");
@@ -28,7 +26,7 @@ public static class AccountConfigure
         modelBuilder.Entity<Account>()
             .HasOne(a => a.Client)
             .WithMany(c => c.Accounts)
-            .HasForeignKey(a => a.ClientGuidId);
+            .HasForeignKey(a => a.ClientId);
 
         modelBuilder.Entity<Account>()
             .Property(account => account.MaskedPan)

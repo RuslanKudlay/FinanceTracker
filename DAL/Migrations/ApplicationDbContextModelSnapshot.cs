@@ -81,7 +81,7 @@ namespace DAL.Migrations
                         .HasComment("UAH, DOL, EURO...")
                         .HasAnnotation("Relational:JsonPropertyName", "cashbackType");
 
-                    b.Property<Guid>("ClientGuidId")
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("CreditLimit")
@@ -125,25 +125,6 @@ namespace DAL.Migrations
                         .HasComment("Масковані номери карт")
                         .HasAnnotation("Relational:JsonPropertyName", "maskedPan");
 
-                    b.Property<string>("MonoClientId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasAnnotation("Relational:JsonPropertyName", "clientId");
-
-                    b.Property<string>("MonoId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("MonoId")
-                        .HasComment("Id акаунту в mono")
-                        .HasAnnotation("Relational:JsonPropertyName", "id");
-
-                    b.Property<string>("SendId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("SendId")
-                        .HasComment("SendId")
-                        .HasAnnotation("Relational:JsonPropertyName", "sendId");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text")
@@ -153,7 +134,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientGuidId");
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Accounts", (string)null);
 
@@ -167,13 +148,6 @@ namespace DAL.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("Id")
                         .HasComment("Первинний ключ");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("ClientId")
-                        .HasComment("ClientId")
-                        .HasAnnotation("Relational:JsonPropertyName", "clientId");
 
                     b.Property<DateTime?>("DateCreate")
                         .HasColumnType("timestamp without time zone")
@@ -398,7 +372,7 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Entities.Mono.Client", "Client")
                         .WithMany("Accounts")
-                        .HasForeignKey("ClientGuidId")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

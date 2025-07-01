@@ -4,12 +4,6 @@ namespace DAL.Entities.Mono;
 
 public class Account : BaseEntity
 {
-    [JsonPropertyName("id")]
-    public string MonoId { get; set; }
-
-    [JsonPropertyName("sendId")]
-    public string SendId { get; set; }
-
     [JsonPropertyName("currencyCode")]
     public int CurrencyCode { get; set; }
 
@@ -31,10 +25,7 @@ public class Account : BaseEntity
     [JsonPropertyName("iban")]
     public string Iban { get; set; }
 
-    [JsonPropertyName("clientId")]
-    public string MonoClientId { get; set; } // Значення з API Monobank
-
-    public Guid ClientGuidId { get; set; }
+    public Guid ClientId { get; set; }
 
     [JsonIgnore]
     public Client Client { get; set; }

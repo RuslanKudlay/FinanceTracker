@@ -4,9 +4,6 @@ namespace DAL.Entities.Mono;
 
 public class Client : BaseEntity
 {
-    [JsonPropertyName("clientId")]
-    public string ClientId { get; set; }
-    
     [JsonPropertyName("name")]
     public string Name { get; set; }
     

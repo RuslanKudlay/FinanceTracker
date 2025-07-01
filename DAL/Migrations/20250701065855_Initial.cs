@@ -54,7 +54,6 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Первинний ключ"),
-                    ClientId = table.Column<string>(type: "text", nullable: false, comment: "ClientId"),
                     Name = table.Column<string>(type: "text", nullable: false, comment: "Name"),
                     WebHookUrl = table.Column<string>(type: "text", nullable: false, comment: "WebHookUrl"),
                     Permissions = table.Column<string>(type: "text", nullable: false, comment: "Permissions"),
@@ -129,8 +128,6 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Первинний ключ"),
-                    MonoId = table.Column<string>(type: "text", nullable: false, comment: "Id акаунту в mono"),
-                    SendId = table.Column<string>(type: "text", nullable: false, comment: "SendId"),
                     CurrencyCode = table.Column<int>(type: "integer", nullable: false, comment: "Код валюти"),
                     CashbackType = table.Column<string>(type: "text", nullable: true, comment: "UAH, DOL, EURO..."),
                     Balance = table.Column<int>(type: "integer", nullable: false, comment: "Баланс"),
@@ -138,7 +135,6 @@ namespace DAL.Migrations
                     MaskedPan = table.Column<string>(type: "text", nullable: false, comment: "Масковані номери карт"),
                     Type = table.Column<string>(type: "text", nullable: false, comment: "Тип карти"),
                     Iban = table.Column<string>(type: "text", nullable: false, comment: "Номер IBAN"),
-                    MonoClientId = table.Column<string>(type: "text", nullable: false),
                     ClientId = table.Column<Guid>(type: "uuid", nullable: false),
                     DateCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата створення"),
                     DateUpdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата оновлення"),

@@ -14,7 +14,6 @@ public static class ClientConfigure
         modelBuilder.Entity<Client>().Property(client => client.DateUpdate).HasColumnName("DateUpdate").HasComment("Дата оновлення");
         modelBuilder.Entity<Client>().Property(client => client.IsDeleted).HasColumnName("IsDeleted").HasComment("Прапор видалення");
 
-        modelBuilder.Entity<Client>().Property(client => client.ClientId).HasColumnName("ClientId").HasComment("ClientId");
         modelBuilder.Entity<Client>().Property(client => client.Name).HasColumnName("Name").HasComment("Name");
         modelBuilder.Entity<Client>().Property(client => client.WebHookUrl).HasColumnName("WebHookUrl").HasComment("WebHookUrl");
         modelBuilder.Entity<Client>().Property(client => client.Permissions).HasColumnName("Permissions").HasComment("Permissions");
