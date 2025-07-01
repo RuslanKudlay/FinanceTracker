@@ -3,6 +3,8 @@ using BAL.Services.Interfaces;
 using DAL;
 using DAL.DTOs.FamilyGroup;
 using DAL.Entities;
+using FinanceTracking.Extentions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace BAL.Services;
@@ -10,18 +12,21 @@ namespace BAL.Services;
 public class FamilyGroupService : IFamilyGroupService
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly IHttpContextAccessor _accessor;
     private readonly IEmailService _emailService;
 
-    public FamilyGroupService(ApplicationDbContext dbContext, IEmailService emailService)
+    public FamilyGroupService(ApplicationDbContext dbContext, IEmailService emailService, IHttpContextAccessor accessor)
     {
         _dbContext = dbContext;
         _emailService = emailService;
+        _accessor = accessor;
     }
 
     public async Task<bool> CreateAsync(CreateGroupDto item)
     {
         var familyGroup = CreateInstanceFamilyGroup(item);
         await _dbContext.FamilyGroups.AddAsync(familyGroup);
+        await _dbContext.UserFamilyGroups.AddAsync(new UserFamilyGroup(){UserId = _accessor.GetUserId().Value, FamilyGroupId = familyGroup.Id});
         return await _dbContext.SaveChangesAsync() > 0;
     }
 

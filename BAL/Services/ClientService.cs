@@ -3,6 +3,8 @@ using DAL;
 using DAL.DTOs.Mono;
 using DAL.Entities.Mono;
 using DAL.Exceptions;
+using FinanceTracking.Extentions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace BAL.Services;
@@ -10,10 +12,12 @@ namespace BAL.Services;
 public class ClientService : IClientService
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly IHttpContextAccessor _accessor;
 
-    public ClientService(ApplicationDbContext dbContext)
+    public ClientService(ApplicationDbContext dbContext, IHttpContextAccessor accessor)
     {
         _dbContext = dbContext;
+        _accessor = accessor;
     }
 
     public async Task<BalanceDto> CreateOrUpdateClientFromMonoAsync(Client clientFromApi)
@@ -34,9 +38,61 @@ public class ClientService : IClientService
         }
 
         await _dbContext.SaveChangesAsync();
-        
-        var balance = clientFromApi.Accounts.FirstOrDefault(account => account.Type == "black");
-        return new BalanceDto(balance.Balance / 100.0, balance.CardMaskedPans.FirstOrDefault().MaskedPan);
+
+        var familyUserIds = await GetFamilyUserIdsAsync();
+        var clients = await GetClientsWithAccountsAsync(familyUserIds);
+        var accounts = GetFilteredAccounts(clients, "black");
+
+        var balance = BuildBalanceDto(clients, accounts);
+
+        return balance;
+    }
+    
+    private async Task<List<Guid>> GetFamilyUserIdsAsync()
+    {
+        var group = await _dbContext.UserFamilyGroups
+            .FirstOrDefaultAsync(ug => ug.UserId == _accessor.GetUserId().Value);
+
+        if (group == null)
+            throw new CustomException("Сімейна група не знайдена");
+
+        return await _dbContext.UserFamilyGroups
+            .Where(g => g.FamilyGroupId == group.FamilyGroupId)
+            .Select(g => g.UserId)
+            .ToListAsync();
+    }
+    
+    private async Task<List<Client>> GetClientsWithAccountsAsync(List<Guid> userIds)
+    {
+        return await _dbContext.Clients
+            .Where(cl => userIds.Contains(cl.UserId))
+            .Include(cl => cl.Accounts)
+            .ThenInclude(acc => acc.CardMaskedPans)
+            .ToListAsync();
+    }
+    
+    private List<Account> GetFilteredAccounts(List<Client> clients, string type)
+    {
+        return clients
+            .SelectMany(cl => cl.Accounts.Where(acc => acc.Type == type))
+            .ToList();
+    }
+    
+    private BalanceDto BuildBalanceDto(List<Client> clients, List<Account> accounts)
+    {
+        return new BalanceDto
+        {
+            TotalBalance = accounts.Sum(a => a.Balance) / 100.0,
+            BalanceClients = accounts.Select(acc => new BalanceClientDto
+            {
+                Id = acc.Id,
+                Balance = acc.Balance / 100.0,
+                ClientName = clients
+                    .FirstOrDefault(cl => cl.Accounts.Any(p => p.Id == acc.Id))?.Name,
+                Card = acc.CardMaskedPans
+                    .FirstOrDefault(card => card.MaskedPan.EndsWith("9784"))?.MaskedPan
+            }).ToList()
+        };
     }
 
     private async Task<Client?> GetExistingClientAsync(Guid userId)

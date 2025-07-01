@@ -1,3 +1,7 @@
 ﻿namespace DAL.DTOs.Mono;
 
-public record BalanceDto(double balance, string card);
+public record BalanceDto
+{
+    public double TotalBalance { get; set; }
+    public List<BalanceClientDto> BalanceClients { get; set; }
+};
