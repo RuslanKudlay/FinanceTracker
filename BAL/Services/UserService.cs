@@ -36,7 +36,7 @@ public class UserService : IUserService//: BaseService<User, UserDto>, IUserServ
         }
 
         var hash = PasswordHesher.GetHash(dto.Password);
-        await _dbContext.Users.AddAsync(new User() { Email = dto.Email, PasswordHash = hash, FullName = dto.FullName });
+        await _dbContext.Users.AddAsync(new User() { Email = dto.Email, PasswordHash = hash, FullName = dto.FullName, IsVisibleInGroup = true});
         return await _dbContext.SaveChangesAsync() > 0;
 
     }

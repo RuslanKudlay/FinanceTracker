@@ -17,11 +17,24 @@ public static class SettingConfigure
         modelBuilder.Entity<Setting>().Property(setting => setting.Key).HasColumnName("Key").HasComment("Ключ налаштування");
         modelBuilder.Entity<Setting>().Property(setting => setting.Value).HasColumnName("Value").HasComment("Значення налаштування");
         modelBuilder.Entity<Setting>().Property(setting => setting.Description).HasColumnName("Description").HasComment("Опис");
-        modelBuilder.Entity<Setting>().Property(setting => setting.UserId).HasColumnName("UserId").HasComment("Зовнішній ключ користувача");
         modelBuilder.Entity<Setting>()
             .Property(transaction => transaction.DataType)
             .HasColumnName("Type")
             .HasComment("Тип даних налаштування")
             .HasConversion<string>();
+
+        modelBuilder.Entity<Setting>().HasData(new List<Setting>()
+        {
+            new ()
+            {
+                Id = Guid.NewGuid(),
+                Key = "MonoToken",
+                Value = "DefaultValue",
+                Description = "Токен для інтеграції з монобанк",
+                DataType = Enums.DataType.String,
+                DateCreate = DateTime.Now,
+                IsDeleted = false
+            }
+        });
     }
 }

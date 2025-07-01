@@ -17,6 +17,8 @@ public static class UserConfigure
         modelBuilder.Entity<User>().Property(user => user.FullName).HasColumnName("FullName").HasComment("Повне ім'я");
         modelBuilder.Entity<User>().Property(user => user.Email).HasColumnName("Email").HasComment("Email");
         modelBuilder.Entity<User>().Property(user => user.PasswordHash).HasColumnName("PasswordHash").HasComment("Хеш паролю");
+        
+        modelBuilder.Entity<User>().Property(user => user.IsVisibleInGroup).HasColumnName("IsVisibleInGroup").HasComment("Чи показувати в групі для спільного балансу");
 
         modelBuilder.Entity<User>().HasMany(trns => trns.Transactions).WithOne(user => user.User);
         modelBuilder.Entity<User>().HasMany(trns => trns.UserCategories).WithOne(user => user.User);

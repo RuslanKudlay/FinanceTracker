@@ -8,4 +8,5 @@ public class User : BaseEntity
     
     public List<Transaction> Transactions { get; set; }
     public List<UserCategory> UserCategories { get; set; }
+    public bool IsVisibleInGroup { get; set; } = false;
 }

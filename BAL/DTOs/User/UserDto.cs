@@ -1,4 +1,6 @@
-﻿namespace DAL.DTOs;
+﻿using DAL.DTOs.FamilyGroup;
+
+namespace DAL.DTOs;
 
 public record UserDto
 {
@@ -9,4 +11,8 @@ public record UserDto
     
     public List<TransactionDto> Transactions { get; set; }
     public List<CategoryDto> Categories { get; set; }
+    
+    public Guid? FamilyGroupId { get; set; }
+    public FamilyGroupDto FamilyGroup { get; set; }
+    public bool IsVisibleInGroup { get; set; }
 }

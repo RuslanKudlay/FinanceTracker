@@ -18,6 +18,16 @@ public class ApplicationDbContext : DbContext
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<FamilyGroup> FamilyGroups { get; set; }
+    public DbSet<UserSetting> UserSettings { get; set; }
+
+    #region -- many_to_many --
+
+    public DbSet<UserCategory> UserCategories { get; set; }
+    public DbSet<UserFamilyGroup> UserFamilyGroups { get; set; }
+
+    #endregion
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,6 +40,9 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ConfigureAccount();
         modelBuilder.ConfigureClient();
         modelBuilder.ConfigureUserCategory();
+        modelBuilder.ConfigureFamilyGroup();
+        modelBuilder.ConfigureUserFamilyGroup();
+        modelBuilder.ConfigureUserSetting();
             
         base.OnModelCreating(modelBuilder);
     }

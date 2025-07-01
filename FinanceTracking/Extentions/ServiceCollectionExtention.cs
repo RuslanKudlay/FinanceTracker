@@ -11,11 +11,13 @@ public static class ServiceCollectionExtention
 
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IMonoService, MonoService>();
-        serviceCollection.AddScoped<ISettingService, SettingService>();
         serviceCollection.AddScoped<ICategoryService, CategoryService>();
         serviceCollection.AddScoped<ITransactionService, TransactionService>();
 
         serviceCollection.AddScoped<IClientService, ClientService>();
+        serviceCollection.AddScoped<IFamilyGroupService, FamilyGroupService>();
+        serviceCollection.AddScoped<IEmailService, SmtpEmailService>();
+        serviceCollection.AddScoped<IUserSettingService, UserSettingService>();
 
         return serviceCollection;
     }

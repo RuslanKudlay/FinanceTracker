@@ -31,7 +31,7 @@ public class MonoService : IMonoService
     {
         var httpClient = _httpClientFactory.CreateClient();
         var userId = _contextAccessor.GetUserId();
-        var setting = await _dbContext.Settings.FirstOrDefaultAsync(s => s.Key == "MonoToken" && s.UserId == Guid.Parse(userId));
+        var setting = await _dbContext.UserSettings.FirstOrDefaultAsync(s => s.Key == "MonoToken" && s.UserId == userId);
 
         if (setting == null)
             return null;
@@ -44,7 +44,7 @@ public class MonoService : IMonoService
 
         var result = await response.Content.ReadAsStringAsync();
         var client = JsonSerializer.Deserialize<ClientDto>(result);
-        client.UserId = Guid.Parse(userId);
+        client.UserId = userId.Value;
         
         foreach (var account in client.Accounts)
         {

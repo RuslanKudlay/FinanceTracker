@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,39 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FamilyGroups",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Первинний ключ"),
+                    Name = table.Column<string>(type: "text", nullable: false, comment: "Назва групи"),
+                    DateCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата створення"),
+                    DateUpdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата оновлення"),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: true, comment: "Прапор видалення")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FamilyGroups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Первинний ключ"),
+                    Key = table.Column<string>(type: "text", nullable: false, comment: "Ключ налаштування"),
+                    Value = table.Column<string>(type: "text", nullable: false, comment: "Значення налаштування"),
+                    Description = table.Column<string>(type: "text", nullable: false, comment: "Опис"),
+                    Type = table.Column<string>(type: "text", nullable: false, comment: "Тип даних налаштування"),
+                    DateCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата створення"),
+                    DateUpdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата оновлення"),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: true, comment: "Прапор видалення")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -40,6 +73,8 @@ namespace DAL.Migrations
                     FullName = table.Column<string>(type: "text", nullable: true, comment: "Повне ім'я"),
                     Email = table.Column<string>(type: "text", nullable: false, comment: "Email"),
                     PasswordHash = table.Column<string>(type: "text", nullable: false, comment: "Хеш паролю"),
+                    IsVisibleInGroup = table.Column<bool>(type: "boolean", nullable: false, comment: "Чи показувати в групі для спільного балансу"),
+                    FamilyGroupId = table.Column<Guid>(type: "uuid", nullable: true),
                     DateCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата створення"),
                     DateUpdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата оновлення"),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: true, comment: "Прапор видалення")
@@ -47,6 +82,11 @@ namespace DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_FamilyGroups_FamilyGroupId",
+                        column: x => x.FamilyGroupId,
+                        principalTable: "FamilyGroups",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -67,31 +107,6 @@ namespace DAL.Migrations
                     table.PrimaryKey("PK_Clients", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Clients_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Settings",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Первинний ключ"),
-                    Key = table.Column<string>(type: "text", nullable: false, comment: "Ключ налаштування"),
-                    Value = table.Column<string>(type: "text", nullable: false, comment: "Значення налаштування"),
-                    Description = table.Column<string>(type: "text", nullable: false, comment: "Опис"),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false, comment: "Зовнішній ключ користувача"),
-                    Type = table.Column<string>(type: "text", nullable: false, comment: "Тип даних налаштування"),
-                    DateCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата створення"),
-                    DateUpdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата оновлення"),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: true, comment: "Прапор видалення")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Settings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Settings_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -124,6 +139,36 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserSettings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Первинний ключ"),
+                    Key = table.Column<string>(type: "text", nullable: false, comment: "Ключ налаштування"),
+                    Value = table.Column<string>(type: "text", nullable: false, comment: "Значення налаштування"),
+                    Description = table.Column<string>(type: "text", nullable: false, comment: "Опис"),
+                    Type = table.Column<string>(type: "text", nullable: false, comment: "Тип даних налаштування"),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Ключ користвача"),
+                    SettingId = table.Column<Guid>(type: "uuid", nullable: true, comment: "Ключ налаштування"),
+                    DateCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата створення"),
+                    DateUpdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, comment: "Дата оновлення"),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: true, comment: "Прапор видалення")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSettings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserSettings_Settings_SettingId",
+                        column: x => x.SettingId,
+                        principalTable: "Settings",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_UserSettings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "mm_users_categories",
                 schema: "many_to_many",
                 columns: table => new
@@ -142,6 +187,31 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_mm_users_categories_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "mm_users_groups",
+                schema: "many_to_many",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    FamilyGroupId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_mm_users_groups", x => new { x.UserId, x.FamilyGroupId });
+                    table.ForeignKey(
+                        name: "FK_mm_users_groups_FamilyGroups_FamilyGroupId",
+                        column: x => x.FamilyGroupId,
+                        principalTable: "FamilyGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_mm_users_groups_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -202,17 +272,22 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "DateCreate", "DateUpdate", "Description", "IsDeleted", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1db85ff8-9cc8-4a2b-9000-8776ea3f6559"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(957), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(959), "Ремонт, ТО, заправка...", false, "Автомобіль" },
-                    { new Guid("21c5fa0a-7ad0-4916-8857-cfc3ca91a5a3"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(970), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(971), "", false, "Краса та гігієна" },
-                    { new Guid("2f5ac876-e8db-4059-b753-3025563614b7"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(920), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(922), "Електроенергія, тепло, ОСББ/ЖЕК, дофомон, ліфт, вода...", false, "Комунальні платежі" },
-                    { new Guid("45fc02b8-a372-47c7-b005-e56952455105"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(944), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(947), "Оплата за одяг, або інші речі (КОМФІ, ТА-ДА, АВРОРА)", false, "Шопінг" },
-                    { new Guid("66a5e0a2-02cc-4551-bb08-56f2367d5da8"), new DateTime(2025, 7, 1, 13, 47, 19, 631, DateTimeKind.Local).AddTicks(99), new DateTime(2025, 7, 1, 13, 47, 19, 632, DateTimeKind.Local).AddTicks(9559), "Сплата громадського транспорту, таксі", false, "Транспорт" },
-                    { new Guid("6fb35072-8199-4481-a721-5624954f1640"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(902), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(915), "Сплата оренди за квартиру власнику", false, "Оренда квартири" },
-                    { new Guid("8e9706b5-07c5-46f8-a3e4-fadcd563c012"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(975), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(977), "Лікарні, аптеки", false, "Здоров'я" },
-                    { new Guid("96c3900c-ff5a-4d77-9061-03f745c191ba"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(938), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(940), "Оплата за товари для харчування", false, "Харчування" },
-                    { new Guid("ae2e559f-4c75-4ba1-8bb8-030dd78af3ca"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(982), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(984), "Покупки для підвищення комфорту в житлі", false, "Житло" },
-                    { new Guid("fb0d0a4f-6ba8-4e85-a520-a1825e78a65a"), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(963), new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(965), "Оплата тільки за одяг", false, "Одяг" }
+                    { new Guid("023729fa-568d-477d-82d1-3fbc6c5adab0"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9125), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9127), "Лікарні, аптеки", false, "Здоров'я" },
+                    { new Guid("331e5a34-3604-4d7e-9dd1-1173bc7831fc"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9104), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9106), "Ремонт, ТО, заправка...", false, "Автомобіль" },
+                    { new Guid("45faa4a1-7125-4298-936b-fb257bca62f6"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9110), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9113), "Оплата тільки за одяг", false, "Одяг" },
+                    { new Guid("6b2875c6-f916-4eb6-b771-abe6127e5dc9"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9137), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9140), "Покупки для підвищення комфорту в житлі", false, "Житло" },
+                    { new Guid("8601aa6d-7848-4d3d-ad29-44b86bd7fa34"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9079), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9081), "Оплата за товари для харчування", false, "Харчування" },
+                    { new Guid("8749f0d9-831f-40a7-a194-a3aa14ac7f3b"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9073), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9074), "Електроенергія, тепло, ОСББ/ЖЕК, дофомон, ліфт, вода...", false, "Комунальні платежі" },
+                    { new Guid("96d40795-f07c-44ca-aeb9-28555a8923a2"), new DateTime(2025, 7, 1, 16, 45, 45, 680, DateTimeKind.Local).AddTicks(5673), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(7514), "Сплата громадського транспорту, таксі", false, "Транспорт" },
+                    { new Guid("b77bd731-6d99-4e67-a064-878f028228ae"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9118), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9120), "", false, "Краса та гігієна" },
+                    { new Guid("d2230919-65f7-42c5-84de-461863be61f2"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9085), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9087), "Оплата за одяг, або інші речі (КОМФІ, ТА-ДА, АВРОРА)", false, "Шопінг" },
+                    { new Guid("ee4189ed-7793-4d04-bb27-f8595197db21"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9053), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9066), "Сплата оренди за квартиру власнику", false, "Оренда квартири" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Settings",
+                columns: new[] { "Id", "Type", "DateCreate", "DateUpdate", "Description", "IsDeleted", "Key", "Value" },
+                values: new object[] { new Guid("441f3b9e-c955-4ca8-b6c5-59a31d2893f9"), "String", new DateTime(2025, 7, 1, 16, 45, 45, 689, DateTimeKind.Local).AddTicks(6938), null, "Токен для інтеграції з монобанк", false, "MonoToken", "DefaultValue" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_ClientId",
@@ -230,14 +305,24 @@ namespace DAL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Settings_UserId",
-                table: "Settings",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_UserId",
                 table: "Transactions",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserSettings_SettingId",
+                table: "UserSettings",
+                column: "SettingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserSettings_UserId",
+                table: "UserSettings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_FamilyGroupId",
+                table: "Users",
+                column: "FamilyGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_mm_users_categories_CategoryId",
@@ -251,6 +336,19 @@ namespace DAL.Migrations
                 table: "mm_users_categories",
                 columns: new[] { "UserId", "CategoryId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_mm_users_groups_FamilyGroupId",
+                schema: "many_to_many",
+                table: "mm_users_groups",
+                column: "FamilyGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_mm_users_groups_UserId_FamilyGroupId",
+                schema: "many_to_many",
+                table: "mm_users_groups",
+                columns: new[] { "UserId", "FamilyGroupId" },
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -260,17 +358,24 @@ namespace DAL.Migrations
                 name: "CardMaskedPan");
 
             migrationBuilder.DropTable(
-                name: "Settings");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "UserSettings");
 
             migrationBuilder.DropTable(
                 name: "mm_users_categories",
                 schema: "many_to_many");
 
             migrationBuilder.DropTable(
+                name: "mm_users_groups",
+                schema: "many_to_many");
+
+            migrationBuilder.DropTable(
                 name: "Accounts");
+
+            migrationBuilder.DropTable(
+                name: "Settings");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -280,6 +385,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "FamilyGroups");
         }
     }
 }

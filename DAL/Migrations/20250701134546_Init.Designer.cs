@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250701104720_Initial")]
-    partial class Initial
+    [Migration("20250701134546_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,94 +65,128 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("66a5e0a2-02cc-4551-bb08-56f2367d5da8"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 631, DateTimeKind.Local).AddTicks(99),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 632, DateTimeKind.Local).AddTicks(9559),
+                            Id = new Guid("96d40795-f07c-44ca-aeb9-28555a8923a2"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 680, DateTimeKind.Local).AddTicks(5673),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(7514),
                             Description = "Сплата громадського транспорту, таксі",
                             IsDeleted = false,
                             Name = "Транспорт"
                         },
                         new
                         {
-                            Id = new Guid("6fb35072-8199-4481-a721-5624954f1640"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(902),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(915),
+                            Id = new Guid("ee4189ed-7793-4d04-bb27-f8595197db21"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9053),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9066),
                             Description = "Сплата оренди за квартиру власнику",
                             IsDeleted = false,
                             Name = "Оренда квартири"
                         },
                         new
                         {
-                            Id = new Guid("2f5ac876-e8db-4059-b753-3025563614b7"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(920),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(922),
+                            Id = new Guid("8749f0d9-831f-40a7-a194-a3aa14ac7f3b"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9073),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9074),
                             Description = "Електроенергія, тепло, ОСББ/ЖЕК, дофомон, ліфт, вода...",
                             IsDeleted = false,
                             Name = "Комунальні платежі"
                         },
                         new
                         {
-                            Id = new Guid("96c3900c-ff5a-4d77-9061-03f745c191ba"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(938),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(940),
+                            Id = new Guid("8601aa6d-7848-4d3d-ad29-44b86bd7fa34"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9079),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9081),
                             Description = "Оплата за товари для харчування",
                             IsDeleted = false,
                             Name = "Харчування"
                         },
                         new
                         {
-                            Id = new Guid("45fc02b8-a372-47c7-b005-e56952455105"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(944),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(947),
+                            Id = new Guid("d2230919-65f7-42c5-84de-461863be61f2"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9085),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9087),
                             Description = "Оплата за одяг, або інші речі (КОМФІ, ТА-ДА, АВРОРА)",
                             IsDeleted = false,
                             Name = "Шопінг"
                         },
                         new
                         {
-                            Id = new Guid("1db85ff8-9cc8-4a2b-9000-8776ea3f6559"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(957),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(959),
+                            Id = new Guid("331e5a34-3604-4d7e-9dd1-1173bc7831fc"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9104),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9106),
                             Description = "Ремонт, ТО, заправка...",
                             IsDeleted = false,
                             Name = "Автомобіль"
                         },
                         new
                         {
-                            Id = new Guid("fb0d0a4f-6ba8-4e85-a520-a1825e78a65a"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(963),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(965),
+                            Id = new Guid("45faa4a1-7125-4298-936b-fb257bca62f6"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9110),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9113),
                             Description = "Оплата тільки за одяг",
                             IsDeleted = false,
                             Name = "Одяг"
                         },
                         new
                         {
-                            Id = new Guid("21c5fa0a-7ad0-4916-8857-cfc3ca91a5a3"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(970),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(971),
+                            Id = new Guid("b77bd731-6d99-4e67-a064-878f028228ae"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9118),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9120),
                             Description = "",
                             IsDeleted = false,
                             Name = "Краса та гігієна"
                         },
                         new
                         {
-                            Id = new Guid("8e9706b5-07c5-46f8-a3e4-fadcd563c012"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(975),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(977),
+                            Id = new Guid("023729fa-568d-477d-82d1-3fbc6c5adab0"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9125),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9127),
                             Description = "Лікарні, аптеки",
                             IsDeleted = false,
                             Name = "Здоров'я"
                         },
                         new
                         {
-                            Id = new Guid("ae2e559f-4c75-4ba1-8bb8-030dd78af3ca"),
-                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(982),
-                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(984),
+                            Id = new Guid("6b2875c6-f916-4eb6-b771-abe6127e5dc9"),
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9137),
+                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9140),
                             Description = "Покупки для підвищення комфорту в житлі",
                             IsDeleted = false,
                             Name = "Житло"
                         });
+                });
+
+            modelBuilder.Entity("DAL.Entities.FamilyGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasComment("Первинний ключ");
+
+                    b.Property<DateTime?>("DateCreate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateCreate")
+                        .HasComment("Дата створення");
+
+                    b.Property<DateTime?>("DateUpdate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateUpdate")
+                        .HasComment("Дата оновлення");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("IsDeleted")
+                        .HasComment("Прапор видалення");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Name")
+                        .HasComment("Назва групи");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FamilyGroups", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Mono.Account", b =>
@@ -343,11 +377,6 @@ namespace DAL.Migrations
                         .HasColumnName("Key")
                         .HasComment("Ключ налаштування");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("UserId")
-                        .HasComment("Зовнішній ключ користувача");
-
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("text")
@@ -356,9 +385,19 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Settings", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("441f3b9e-c955-4ca8-b6c5-59a31d2893f9"),
+                            DataType = "String",
+                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 689, DateTimeKind.Local).AddTicks(6938),
+                            Description = "Токен для інтеграції з монобанк",
+                            IsDeleted = false,
+                            Key = "MonoToken",
+                            Value = "DefaultValue"
+                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.Transaction", b =>
@@ -443,6 +482,9 @@ namespace DAL.Migrations
                         .HasColumnName("Email")
                         .HasComment("Email");
 
+                    b.Property<Guid?>("FamilyGroupId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("FullName")
                         .HasColumnType("text")
                         .HasColumnName("FullName")
@@ -453,6 +495,11 @@ namespace DAL.Migrations
                         .HasColumnName("IsDeleted")
                         .HasComment("Прапор видалення");
 
+                    b.Property<bool>("IsVisibleInGroup")
+                        .HasColumnType("boolean")
+                        .HasColumnName("IsVisibleInGroup")
+                        .HasComment("Чи показувати в групі для спільного балансу");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text")
@@ -460,6 +507,8 @@ namespace DAL.Migrations
                         .HasComment("Хеш паролю");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FamilyGroupId");
 
                     b.ToTable("Users", (string)null);
                 });
@@ -480,6 +529,90 @@ namespace DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("mm_users_categories", "many_to_many");
+                });
+
+            modelBuilder.Entity("DAL.Entities.UserFamilyGroup", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FamilyGroupId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "FamilyGroupId");
+
+                    b.HasIndex("FamilyGroupId");
+
+                    b.HasIndex("UserId", "FamilyGroupId")
+                        .IsUnique();
+
+                    b.ToTable("mm_users_groups", "many_to_many");
+                });
+
+            modelBuilder.Entity("DAL.Entities.UserSetting", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("Id")
+                        .HasComment("Первинний ключ");
+
+                    b.Property<string>("DataType")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Type")
+                        .HasComment("Тип даних налаштування");
+
+                    b.Property<DateTime?>("DateCreate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateCreate")
+                        .HasComment("Дата створення");
+
+                    b.Property<DateTime?>("DateUpdate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateUpdate")
+                        .HasComment("Дата оновлення");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Description")
+                        .HasComment("Опис");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("IsDeleted")
+                        .HasComment("Прапор видалення");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Key")
+                        .HasComment("Ключ налаштування");
+
+                    b.Property<Guid?>("SettingId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("SettingId")
+                        .HasComment("Ключ налаштування");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("UserId")
+                        .HasComment("Ключ користвача");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Value")
+                        .HasComment("Значення налаштування");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SettingId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSettings", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Mono.Account", b =>
@@ -515,17 +648,6 @@ namespace DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Setting", b =>
-                {
-                    b.HasOne("DAL.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DAL.Entities.Transaction", b =>
                 {
                     b.HasOne("DAL.Entities.User", "User")
@@ -533,6 +655,13 @@ namespace DAL.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DAL.Entities.User", b =>
+                {
+                    b.HasOne("DAL.Entities.FamilyGroup", null)
+                        .WithMany("Members")
+                        .HasForeignKey("FamilyGroupId");
                 });
 
             modelBuilder.Entity("DAL.Entities.UserCategory", b =>
@@ -552,6 +681,45 @@ namespace DAL.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DAL.Entities.UserFamilyGroup", b =>
+                {
+                    b.HasOne("DAL.Entities.FamilyGroup", "FamilyGroup")
+                        .WithMany()
+                        .HasForeignKey("FamilyGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FamilyGroup");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DAL.Entities.UserSetting", b =>
+                {
+                    b.HasOne("DAL.Entities.Setting", "Setting")
+                        .WithMany()
+                        .HasForeignKey("SettingId");
+
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Setting");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DAL.Entities.FamilyGroup", b =>
+                {
+                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("DAL.Entities.Mono.Account", b =>
