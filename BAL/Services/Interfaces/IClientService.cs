@@ -1,8 +1,9 @@
-﻿using DAL.Entities.Mono;
+﻿using DAL.DTOs.Mono;
+using DAL.Entities.Mono;
 
 namespace BAL.Services.Interfaces;
 
 public interface IClientService
 {
-    Task<bool> CreateOrUpdateClientFromMonoAsync(Client client);
+    Task<BalanceDto> CreateOrUpdateClientFromMonoAsync(Client client);
 }

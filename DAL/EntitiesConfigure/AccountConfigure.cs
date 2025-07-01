@@ -28,14 +28,7 @@ public static class AccountConfigure
             .WithMany(c => c.Accounts)
             .HasForeignKey(a => a.ClientId);
 
-        modelBuilder.Entity<Account>()
-            .Property(account => account.MaskedPan)
-            .HasConversion(
-                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null))
-            .HasColumnName("MaskedPan")
-            .HasComment("Масковані номери карт");
-
-
+        modelBuilder.Entity<Account>().HasMany(account => account
+            .CardMaskedPans).WithOne(card => card.Account);
     }
 }

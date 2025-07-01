@@ -1,5 +1,6 @@
 ﻿using BAL.Services.Interfaces;
 using DAL.DTOs;
+using DAL.DTOs.Mono;
 using DAL.Entities.Mono;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,22 +22,22 @@ public class MonoController : ControllerBase
     }
 
     [HttpGet]
-    [Route("personal-data")]
+    [Route("current-balance")]
     public async Task<IActionResult> GetPersonalData()
     {
         try
         {
             var client = await _monoService.GetBalanceAsync();
-            await _clientService.CreateOrUpdateClientFromMonoAsync(client);
+            var balance = await _clientService.CreateOrUpdateClientFromMonoAsync(client);
             
-            return Ok(new ActionResultDto<Client>()
+            return Ok(new ActionResultDto<BalanceDto>()
             {
-                Data = client
+                Data = balance
             });
         }
         catch (Exception e)
         {
-            return BadRequest(new ActionResultDto<Client>()
+            return BadRequest(new ActionResultDto<BalanceDto>()
             {
                 Message = e.Message
             });

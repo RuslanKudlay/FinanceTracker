@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
+using AutoMapper;
 using BAL.Services.Interfaces;
 using DAL;
+using DAL.DTOs.Mono;
 using DAL.Entities.Mono;
 using FinanceTracking.Extentions;
 using Microsoft.AspNetCore.Http;
@@ -11,16 +13,18 @@ namespace BAL.Services;
 public class MonoService : IMonoService
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly ApplicationDbContext _dbContext;
     private readonly IHttpContextAccessor _contextAccessor;
+    private readonly ApplicationDbContext _dbContext;
+    private readonly IMapper _mapper;
     private const string Address = "https://api.monobank.ua";
     private const string PersonalData = "/personal/client-info";
 
-    public MonoService(IHttpClientFactory httpClientFactory, ApplicationDbContext dbContext, IHttpContextAccessor contextAccessor)
+    public MonoService(IHttpClientFactory httpClientFactory, ApplicationDbContext dbContext, IHttpContextAccessor contextAccessor, IMapper mapper)
     {
         _httpClientFactory = httpClientFactory;
         _dbContext = dbContext;
         _contextAccessor = contextAccessor;
+        _mapper = mapper;
     }
 
     public async Task<Client?> GetBalanceAsync()
@@ -39,8 +43,19 @@ public class MonoService : IMonoService
             return null;
 
         var result = await response.Content.ReadAsStringAsync();
-        var client = JsonSerializer.Deserialize<Client>(result);
+        var client = JsonSerializer.Deserialize<ClientDto>(result);
         client.UserId = Guid.Parse(userId);
-        return client;
+        
+        foreach (var account in client.Accounts)
+        {
+            if (account.MaskedPansRaw != null)
+            {
+                account.CardMaskedPans = account.MaskedPansRaw
+                    .Select(pan => new CardMaskedPan { MaskedPan = pan })
+                    .ToList();
+            }
+        }
+        
+        return _mapper.Map<Client>(client);
     }
 }

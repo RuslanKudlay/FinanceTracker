@@ -1,6 +1,8 @@
 ﻿using BAL.Services.Interfaces;
 using DAL;
+using DAL.DTOs.Mono;
 using DAL.Entities.Mono;
+using DAL.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BAL.Services;
@@ -14,10 +16,10 @@ public class ClientService : IClientService
         _dbContext = dbContext;
     }
 
-    public async Task<bool> CreateOrUpdateClientFromMonoAsync(Client clientFromApi)
+    public async Task<BalanceDto> CreateOrUpdateClientFromMonoAsync(Client clientFromApi)
     {
         if (clientFromApi == null)
-            return false;
+            throw new CustomException("Не вдалось отримати банківські дані за токеном!");
 
         var existingClient = await GetExistingClientAsync(clientFromApi.UserId);
 
@@ -31,13 +33,17 @@ public class ClientService : IClientService
             _dbContext.Clients.Update(existingClient);
         }
 
-        return await _dbContext.SaveChangesAsync() > 0;
+        await _dbContext.SaveChangesAsync();
+        
+        var balance = clientFromApi.Accounts.FirstOrDefault(account => account.Type == "black");
+        return new BalanceDto(balance.Balance / 100.0, balance.CardMaskedPans.FirstOrDefault().MaskedPan);
     }
 
     private async Task<Client?> GetExistingClientAsync(Guid userId)
     {
         return await _dbContext.Clients
             .Include(c => c.Accounts)
+            .ThenInclude(account => account.CardMaskedPans)
             .FirstOrDefaultAsync(c => c.UserId == userId);
     }
 
@@ -60,7 +66,7 @@ public class ClientService : IClientService
         existingClient.Name = clientFromApi.Name;
         existingClient.WebHookUrl = clientFromApi.WebHookUrl;
         existingClient.Permissions = clientFromApi.Permissions;
-        existingClient.DateUpdate = DateTime.UtcNow;
+        existingClient.DateUpdate = DateTime.Now;
 
         foreach (var apiAccount in clientFromApi.Accounts)
         {
@@ -83,7 +89,13 @@ public class ClientService : IClientService
     {
         account.Id = Guid.NewGuid();
         account.ClientId = clientId;
-        account.DateCreate = DateTime.UtcNow;
+        account.DateCreate = DateTime.Now;
+        account.CardMaskedPans.ForEach(card =>
+        {
+            card.Id = Guid.NewGuid();
+            card.DateCreate = DateTime.Now;
+            card.AccountId = account.Id;
+        });
     }
 
     private void UpdateExistingAccount(Account existingAccount, Account apiAccount)
@@ -92,10 +104,9 @@ public class ClientService : IClientService
         existingAccount.CashbackType = apiAccount.CashbackType;
         existingAccount.Balance = apiAccount.Balance;
         existingAccount.CreditLimit = apiAccount.CreditLimit;
-        existingAccount.MaskedPan = apiAccount.MaskedPan;
         existingAccount.Type = apiAccount.Type;
         existingAccount.Iban = apiAccount.Iban;
-        existingAccount.DateUpdate = DateTime.UtcNow;
+        existingAccount.DateUpdate = DateTime.Now;
         existingAccount.IsDeleted = false;
     }
 }
