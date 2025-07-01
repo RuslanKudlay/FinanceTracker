@@ -29,6 +29,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ConfigureSetting();
         modelBuilder.ConfigureAccount();
         modelBuilder.ConfigureClient();
+        modelBuilder.ConfigureUserCategory();
             
         base.OnModelCreating(modelBuilder);
     }

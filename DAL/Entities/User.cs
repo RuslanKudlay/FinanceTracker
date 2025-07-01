@@ -7,5 +7,5 @@ public class User : BaseEntity
     public string PasswordHash { get; set; } = string.Empty;
     
     public List<Transaction> Transactions { get; set; }
-    public List<Category> Categories { get; set; }
+    public List<UserCategory> UserCategories { get; set; }
 }

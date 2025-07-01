@@ -19,6 +19,6 @@ public static class UserConfigure
         modelBuilder.Entity<User>().Property(user => user.PasswordHash).HasColumnName("PasswordHash").HasComment("Хеш паролю");
 
         modelBuilder.Entity<User>().HasMany(trns => trns.Transactions).WithOne(user => user.User);
-        modelBuilder.Entity<User>().HasMany(trns => trns.Categories).WithOne(user => user.User);
+        modelBuilder.Entity<User>().HasMany(trns => trns.UserCategories).WithOne(user => user.User);
     } 
 }

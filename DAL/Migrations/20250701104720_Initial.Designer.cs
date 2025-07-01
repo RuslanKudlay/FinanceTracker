@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250701065855_Initial")]
+    [Migration("20250701104720_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -43,6 +43,10 @@ namespace DAL.Migrations
                         .HasColumnName("DateUpdate")
                         .HasComment("Дата оновлення");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("boolean")
                         .HasColumnName("IsDeleted")
@@ -54,14 +58,101 @@ namespace DAL.Migrations
                         .HasColumnName("Name")
                         .HasComment("Назва категорії");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("66a5e0a2-02cc-4551-bb08-56f2367d5da8"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 631, DateTimeKind.Local).AddTicks(99),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 632, DateTimeKind.Local).AddTicks(9559),
+                            Description = "Сплата громадського транспорту, таксі",
+                            IsDeleted = false,
+                            Name = "Транспорт"
+                        },
+                        new
+                        {
+                            Id = new Guid("6fb35072-8199-4481-a721-5624954f1640"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(902),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(915),
+                            Description = "Сплата оренди за квартиру власнику",
+                            IsDeleted = false,
+                            Name = "Оренда квартири"
+                        },
+                        new
+                        {
+                            Id = new Guid("2f5ac876-e8db-4059-b753-3025563614b7"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(920),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(922),
+                            Description = "Електроенергія, тепло, ОСББ/ЖЕК, дофомон, ліфт, вода...",
+                            IsDeleted = false,
+                            Name = "Комунальні платежі"
+                        },
+                        new
+                        {
+                            Id = new Guid("96c3900c-ff5a-4d77-9061-03f745c191ba"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(938),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(940),
+                            Description = "Оплата за товари для харчування",
+                            IsDeleted = false,
+                            Name = "Харчування"
+                        },
+                        new
+                        {
+                            Id = new Guid("45fc02b8-a372-47c7-b005-e56952455105"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(944),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(947),
+                            Description = "Оплата за одяг, або інші речі (КОМФІ, ТА-ДА, АВРОРА)",
+                            IsDeleted = false,
+                            Name = "Шопінг"
+                        },
+                        new
+                        {
+                            Id = new Guid("1db85ff8-9cc8-4a2b-9000-8776ea3f6559"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(957),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(959),
+                            Description = "Ремонт, ТО, заправка...",
+                            IsDeleted = false,
+                            Name = "Автомобіль"
+                        },
+                        new
+                        {
+                            Id = new Guid("fb0d0a4f-6ba8-4e85-a520-a1825e78a65a"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(963),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(965),
+                            Description = "Оплата тільки за одяг",
+                            IsDeleted = false,
+                            Name = "Одяг"
+                        },
+                        new
+                        {
+                            Id = new Guid("21c5fa0a-7ad0-4916-8857-cfc3ca91a5a3"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(970),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(971),
+                            Description = "",
+                            IsDeleted = false,
+                            Name = "Краса та гігієна"
+                        },
+                        new
+                        {
+                            Id = new Guid("8e9706b5-07c5-46f8-a3e4-fadcd563c012"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(975),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(977),
+                            Description = "Лікарні, аптеки",
+                            IsDeleted = false,
+                            Name = "Здоров'я"
+                        },
+                        new
+                        {
+                            Id = new Guid("ae2e559f-4c75-4ba1-8bb8-030dd78af3ca"),
+                            DateCreate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(982),
+                            DateUpdate = new DateTime(2025, 7, 1, 13, 47, 19, 633, DateTimeKind.Local).AddTicks(984),
+                            Description = "Покупки для підвищення комфорту в житлі",
+                            IsDeleted = false,
+                            Name = "Житло"
+                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.Mono.Account", b =>
@@ -75,14 +166,12 @@ namespace DAL.Migrations
                     b.Property<int>("Balance")
                         .HasColumnType("integer")
                         .HasColumnName("Balance")
-                        .HasComment("Баланс")
-                        .HasAnnotation("Relational:JsonPropertyName", "balance");
+                        .HasComment("Баланс");
 
                     b.Property<string>("CashbackType")
                         .HasColumnType("text")
                         .HasColumnName("CashbackType")
-                        .HasComment("UAH, DOL, EURO...")
-                        .HasAnnotation("Relational:JsonPropertyName", "cashbackType");
+                        .HasComment("UAH, DOL, EURO...");
 
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
@@ -90,14 +179,12 @@ namespace DAL.Migrations
                     b.Property<int>("CreditLimit")
                         .HasColumnType("integer")
                         .HasColumnName("CreditLimit")
-                        .HasComment("Кредитний ліміт")
-                        .HasAnnotation("Relational:JsonPropertyName", "creditLimit");
+                        .HasComment("Кредитний ліміт");
 
                     b.Property<int>("CurrencyCode")
                         .HasColumnType("integer")
                         .HasColumnName("CurrencyCode")
-                        .HasComment("Код валюти")
-                        .HasAnnotation("Relational:JsonPropertyName", "currencyCode");
+                        .HasComment("Код валюти");
 
                     b.Property<DateTime?>("DateCreate")
                         .HasColumnType("timestamp without time zone")
@@ -113,35 +200,53 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Iban")
-                        .HasComment("Номер IBAN")
-                        .HasAnnotation("Relational:JsonPropertyName", "iban");
+                        .HasComment("Номер IBAN");
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("boolean")
                         .HasColumnName("IsDeleted")
                         .HasComment("Прапор видалення");
 
-                    b.Property<string>("MaskedPan")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("MaskedPan")
-                        .HasComment("Масковані номери карт")
-                        .HasAnnotation("Relational:JsonPropertyName", "maskedPan");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Type")
-                        .HasComment("Тип карти")
-                        .HasAnnotation("Relational:JsonPropertyName", "type");
+                        .HasComment("Тип карти");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
                     b.ToTable("Accounts", (string)null);
+                });
 
-                    b.HasAnnotation("Relational:JsonPropertyName", "accounts");
+            modelBuilder.Entity("DAL.Entities.Mono.CardMaskedPan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DateCreate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateUpdate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MaskedPan")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("CardMaskedPan");
                 });
 
             modelBuilder.Entity("DAL.Entities.Mono.Client", b =>
@@ -171,15 +276,13 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Name")
-                        .HasComment("Name")
-                        .HasAnnotation("Relational:JsonPropertyName", "name");
+                        .HasComment("Name");
 
                     b.Property<string>("Permissions")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Permissions")
-                        .HasComment("Permissions")
-                        .HasAnnotation("Relational:JsonPropertyName", "permissions");
+                        .HasComment("Permissions");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -190,8 +293,7 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("WebHookUrl")
-                        .HasComment("WebHookUrl")
-                        .HasAnnotation("Relational:JsonPropertyName", "webHookUrl");
+                        .HasComment("WebHookUrl");
 
                     b.HasKey("Id");
 
@@ -362,13 +464,22 @@ namespace DAL.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("DAL.Entities.Category", b =>
+            modelBuilder.Entity("DAL.Entities.UserCategory", b =>
                 {
-                    b.HasOne("DAL.Entities.User", "User")
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
-                    b.Navigation("User");
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId", "CategoryId")
+                        .IsUnique();
+
+                    b.ToTable("mm_users_categories", "many_to_many");
                 });
 
             modelBuilder.Entity("DAL.Entities.Mono.Account", b =>
@@ -380,6 +491,17 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Mono.CardMaskedPan", b =>
+                {
+                    b.HasOne("DAL.Entities.Mono.Account", "Account")
+                        .WithMany("CardMaskedPans")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("DAL.Entities.Mono.Client", b =>
@@ -413,6 +535,30 @@ namespace DAL.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DAL.Entities.UserCategory", b =>
+                {
+                    b.HasOne("DAL.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithMany("UserCategories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Mono.Account", b =>
+                {
+                    b.Navigation("CardMaskedPans");
+                });
+
             modelBuilder.Entity("DAL.Entities.Mono.Client", b =>
                 {
                     b.Navigation("Accounts");
@@ -420,9 +566,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.User", b =>
                 {
-                    b.Navigation("Categories");
-
                     b.Navigation("Transactions");
+
+                    b.Navigation("UserCategories");
                 });
 #pragma warning restore 612, 618
         }
