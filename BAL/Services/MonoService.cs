@@ -27,7 +27,7 @@ public class MonoService : IMonoService
         _mapper = mapper;
     }
 
-    public async Task<Client?> GetBalanceAsync()
+    public async Task<Client?> GetPersonalDataAsync()
     {
         var httpClient = _httpClientFactory.CreateClient();
         var userId = _contextAccessor.GetUserId();

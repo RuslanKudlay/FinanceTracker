@@ -4,5 +4,5 @@ namespace BAL.Services.Interfaces;
 
 public interface IMonoService
 {
-    Task<Client> GetBalanceAsync();
+    Task<Client> GetPersonalDataAsync();
 }

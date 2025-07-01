@@ -27,7 +27,7 @@ public class MonoController : ControllerBase
     {
         try
         {
-            var client = await _monoService.GetBalanceAsync();
+            var client = await _monoService.GetPersonalDataAsync();
             var balance = await _clientService.CreateOrUpdateClientFromMonoAsync(client);
             
             return Ok(new ActionResultDto<BalanceDto>()
