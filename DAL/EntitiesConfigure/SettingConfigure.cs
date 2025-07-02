@@ -27,7 +27,7 @@ public static class SettingConfigure
         {
             new ()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("441f3b9e-c955-4ca8-b6c5-59a31d2893f9"),
                 Key = "MonoToken",
                 Value = "DefaultValue",
                 Description = "Токен для інтеграції з монобанк",

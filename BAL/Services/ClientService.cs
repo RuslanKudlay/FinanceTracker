@@ -93,8 +93,8 @@ public class ClientService : IClientService
                 Balance = (acc.Balance - acc.CreditLimit) / 100.0,
                 ClientName = clients
                     .FirstOrDefault(cl => cl.Accounts.Any(p => p.Id == acc.Id))?.Name,
-                Card = acc.CardMaskedPans
-                    .FirstOrDefault(card => card.MaskedPan.EndsWith("9784"))?.MaskedPan
+                Cards = acc.CardMaskedPans
+                    .Select(c => c.MaskedPan).ToList()
             }).ToList()
         };
     }

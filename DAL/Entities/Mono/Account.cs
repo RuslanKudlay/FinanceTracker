@@ -2,6 +2,7 @@
 
 public class Account : BaseEntity
 {
+    public string MonoAccountId { get; set; }
     public int CurrencyCode { get; set; }
     public string? CashbackType { get; set; }
     public int Balance { get; set; }

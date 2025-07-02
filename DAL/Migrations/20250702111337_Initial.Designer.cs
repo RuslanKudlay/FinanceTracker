@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250701134546_Init")]
-    partial class Init
+    [Migration("20250702111337_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,90 +65,90 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("96d40795-f07c-44ca-aeb9-28555a8923a2"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 680, DateTimeKind.Local).AddTicks(5673),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(7514),
+                            Id = new Guid("205d8d6c-6626-4926-83db-7311180bffb1"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 320, DateTimeKind.Local).AddTicks(858),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(4498),
                             Description = "Сплата громадського транспорту, таксі",
                             IsDeleted = false,
                             Name = "Транспорт"
                         },
                         new
                         {
-                            Id = new Guid("ee4189ed-7793-4d04-bb27-f8595197db21"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9053),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9066),
+                            Id = new Guid("357af260-56f7-4fd0-aa50-f0c64d08d863"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5959),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5972),
                             Description = "Сплата оренди за квартиру власнику",
                             IsDeleted = false,
                             Name = "Оренда квартири"
                         },
                         new
                         {
-                            Id = new Guid("8749f0d9-831f-40a7-a194-a3aa14ac7f3b"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9073),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9074),
+                            Id = new Guid("03a9ea38-0fbf-48b8-84ec-99dfe374b177"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5977),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5979),
                             Description = "Електроенергія, тепло, ОСББ/ЖЕК, дофомон, ліфт, вода...",
                             IsDeleted = false,
                             Name = "Комунальні платежі"
                         },
                         new
                         {
-                            Id = new Guid("8601aa6d-7848-4d3d-ad29-44b86bd7fa34"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9079),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9081),
+                            Id = new Guid("a6cf6e0e-13f3-4c5d-aadd-29f3f4ad177e"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5983),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5985),
                             Description = "Оплата за товари для харчування",
                             IsDeleted = false,
                             Name = "Харчування"
                         },
                         new
                         {
-                            Id = new Guid("d2230919-65f7-42c5-84de-461863be61f2"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9085),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9087),
+                            Id = new Guid("0e5fb646-bd11-4599-8101-1954e4cd6262"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6000),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6002),
                             Description = "Оплата за одяг, або інші речі (КОМФІ, ТА-ДА, АВРОРА)",
                             IsDeleted = false,
                             Name = "Шопінг"
                         },
                         new
                         {
-                            Id = new Guid("331e5a34-3604-4d7e-9dd1-1173bc7831fc"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9104),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9106),
+                            Id = new Guid("209f62a8-629b-4ec5-a1fd-5c4dd350c811"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6015),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6017),
                             Description = "Ремонт, ТО, заправка...",
                             IsDeleted = false,
                             Name = "Автомобіль"
                         },
                         new
                         {
-                            Id = new Guid("45faa4a1-7125-4298-936b-fb257bca62f6"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9110),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9113),
+                            Id = new Guid("74ce8132-e7cf-46b8-afc0-ad628956efee"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6021),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6022),
                             Description = "Оплата тільки за одяг",
                             IsDeleted = false,
                             Name = "Одяг"
                         },
                         new
                         {
-                            Id = new Guid("b77bd731-6d99-4e67-a064-878f028228ae"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9118),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9120),
+                            Id = new Guid("23a87473-8a8d-45b0-b7c0-4a464b12701b"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6026),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6028),
                             Description = "",
                             IsDeleted = false,
                             Name = "Краса та гігієна"
                         },
                         new
                         {
-                            Id = new Guid("023729fa-568d-477d-82d1-3fbc6c5adab0"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9125),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9127),
+                            Id = new Guid("edf5fee5-8ce9-4538-be11-2427a9691286"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6032),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6033),
                             Description = "Лікарні, аптеки",
                             IsDeleted = false,
                             Name = "Здоров'я"
                         },
                         new
                         {
-                            Id = new Guid("6b2875c6-f916-4eb6-b771-abe6127e5dc9"),
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9137),
-                            DateUpdate = new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9140),
+                            Id = new Guid("a4562db5-0230-4c4a-bdb2-e23c992d4714"),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6039),
+                            DateUpdate = new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6041),
                             Description = "Покупки для підвищення комфорту в житлі",
                             IsDeleted = false,
                             Name = "Житло"
@@ -240,6 +240,12 @@ namespace DAL.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("IsDeleted")
                         .HasComment("Прапор видалення");
+
+                    b.Property<string>("MonoAccountId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("MonoAccountId")
+                        .HasComment("Account id для транзакцій");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -392,7 +398,7 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("441f3b9e-c955-4ca8-b6c5-59a31d2893f9"),
                             DataType = "String",
-                            DateCreate = new DateTime(2025, 7, 1, 16, 45, 45, 689, DateTimeKind.Local).AddTicks(6938),
+                            DateCreate = new DateTime(2025, 7, 2, 14, 13, 36, 329, DateTimeKind.Local).AddTicks(3159),
                             Description = "Токен для інтеграції з монобанк",
                             IsDeleted = false,
                             Key = "MonoToken",

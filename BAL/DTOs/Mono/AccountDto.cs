@@ -5,6 +5,9 @@ namespace DAL.DTOs.Mono;
 
 public class AccountDto
 {
+    [JsonPropertyName("id")]
+    public string MonoAccountId { get; set; }
+    
     [JsonPropertyName("currencyCode")]
     public int CurrencyCode { get; set; }
 
