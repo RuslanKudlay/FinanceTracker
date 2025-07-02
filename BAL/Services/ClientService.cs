@@ -20,31 +20,35 @@ public class ClientService : IClientService
         _accessor = accessor;
     }
 
-    public async Task<BalanceDto> CreateOrUpdateClientFromMonoAsync(Client clientFromApi)
+    public async Task<BalanceDto> CreateOrUpdateClientFromMonoAsync(List<Client> clientsFromApi)
     {
-        if (clientFromApi == null)
-            throw new CustomException("Не вдалось отримати банківські дані за токеном!");
+        
+        if (clientsFromApi == null || clientsFromApi.Count == 0)
+            throw new CustomException("Не вдалось отримати банківські дані!");
 
-        var existingClient = await GetExistingClientAsync(clientFromApi.UserId);
-
-        if (existingClient == null)
+        foreach (var clientFromApi in clientsFromApi)
         {
-            await AddNewClientAsync(clientFromApi);
+            var existingClient = await GetExistingClientAsync(clientFromApi.UserId);
+            
+            if (existingClient == null)
+            {
+                await AddNewClientAsync(clientFromApi);
+            }
+            else
+            {
+                UpdateExistingClient(existingClient, clientFromApi);
+                _dbContext.Clients.Update(existingClient);
+            }
+            
+            await _dbContext.SaveChangesAsync();
         }
-        else
-        {
-            UpdateExistingClient(existingClient, clientFromApi);
-            _dbContext.Clients.Update(existingClient);
-        }
-
-        await _dbContext.SaveChangesAsync();
-
+        
         var familyUserIds = await GetFamilyUserIdsAsync();
         var clients = await GetClientsWithAccountsAsync(familyUserIds);
         var accounts = GetFilteredAccounts(clients, "black");
-
+        
         var balance = BuildBalanceDto(clients, accounts);
-
+        
         return balance;
     }
     
@@ -65,7 +69,7 @@ public class ClientService : IClientService
     private async Task<List<Client>> GetClientsWithAccountsAsync(List<Guid> userIds)
     {
         return await _dbContext.Clients
-            .Where(cl => userIds.Contains(cl.UserId))
+            .Where(cl => userIds.Contains(cl.UserId) && cl.User.IsVisibleInGroup == true)
             .Include(cl => cl.Accounts)
             .ThenInclude(acc => acc.CardMaskedPans)
             .ToListAsync();
@@ -82,11 +86,11 @@ public class ClientService : IClientService
     {
         return new BalanceDto
         {
-            TotalBalance = accounts.Sum(a => a.Balance) / 100.0,
+            TotalBalance = accounts.Sum(a => a.Balance - a.CreditLimit) / 100.0,
             BalanceClients = accounts.Select(acc => new BalanceClientDto
             {
                 Id = acc.Id,
-                Balance = acc.Balance / 100.0,
+                Balance = (acc.Balance - acc.CreditLimit) / 100.0,
                 ClientName = clients
                     .FirstOrDefault(cl => cl.Accounts.Any(p => p.Id == acc.Id))?.Name,
                 Card = acc.CardMaskedPans

@@ -5,5 +5,5 @@ namespace BAL.Services.Interfaces;
 
 public interface IClientService
 {
-    Task<BalanceDto> CreateOrUpdateClientFromMonoAsync(Client client);
+    Task<BalanceDto> CreateOrUpdateClientFromMonoAsync(List<Client> clients);
 }

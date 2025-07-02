@@ -27,35 +27,49 @@ public class MonoService : IMonoService
         _mapper = mapper;
     }
 
-    public async Task<Client?> GetPersonalDataAsync()
+    public async Task<List<Client>> GetPersonalDataAsync()
     {
         var httpClient = _httpClientFactory.CreateClient();
         var userId = _contextAccessor.GetUserId();
-        var setting = await _dbContext.UserSettings.FirstOrDefaultAsync(s => s.Key == "MonoToken" && s.UserId == userId);
-
-        if (setting == null)
-            return null;
-
-        httpClient.DefaultRequestHeaders.Add("X-Token", setting.Value);
-        var response = await httpClient.GetAsync(Address + PersonalData);
-
-        if (!response.IsSuccessStatusCode)
-            return null;
-
-        var result = await response.Content.ReadAsStringAsync();
-        var client = JsonSerializer.Deserialize<ClientDto>(result);
-        client.UserId = userId.Value;
+        var myGroup = await _dbContext.UserFamilyGroups.FirstOrDefaultAsync(ufg => ufg.UserId == userId);
+        var userGroups = await _dbContext.UserFamilyGroups.Where(ufg => ufg.FamilyGroupId == myGroup.FamilyGroupId).ToListAsync();
+        var userGroupIds = userGroups.Select(ug => ug.UserId).ToList();
+        var users = await _dbContext.Users.Where(u => userGroupIds.Contains(u.Id)).ToListAsync();
+        var userIds = users.Select(u => u.Id).ToList();
         
-        foreach (var account in client.Accounts)
+        var settings = await _dbContext.UserSettings.Where(s => s.Key == "MonoToken" && userIds.Contains(s.UserId.Value)).ToListAsync();
+
+        if (settings == null || settings.Count == 0)
+            return new List<Client>();
+
+        var clients = new List<Client>();
+
+        foreach (var setting in settings)
         {
-            if (account.MaskedPansRaw != null)
-            {
-                account.CardMaskedPans = account.MaskedPansRaw
-                    .Select(pan => new CardMaskedPan { MaskedPan = pan })
-                    .ToList();
-            }
-        }
+            httpClient.DefaultRequestHeaders.Add("X-Token", setting.Value);
+            var response = await httpClient.GetAsync(Address + PersonalData);
+            httpClient.DefaultRequestHeaders.Remove("X-Token");
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var result = await response.Content.ReadAsStringAsync();
+            var client = JsonSerializer.Deserialize<ClientDto>(result);
+            client.UserId = setting.UserId.Value;
         
-        return _mapper.Map<Client>(client);
+            foreach (var account in client.Accounts)
+            {
+                if (account.MaskedPansRaw != null)
+                {
+                    account.CardMaskedPans = account.MaskedPansRaw
+                        .Select(pan => new CardMaskedPan { MaskedPan = pan })
+                        .ToList();
+                }
+            }
+        
+            clients.Add(_mapper.Map<Client>(client));
+        }
+
+        return clients;
     }
 }
