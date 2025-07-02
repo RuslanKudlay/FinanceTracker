@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -223,6 +223,7 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Первинний ключ"),
+                    MonoAccountId = table.Column<string>(type: "text", nullable: false, comment: "Account id для транзакцій"),
                     CurrencyCode = table.Column<int>(type: "integer", nullable: false, comment: "Код валюти"),
                     CashbackType = table.Column<string>(type: "text", nullable: true, comment: "UAH, DOL, EURO..."),
                     Balance = table.Column<int>(type: "integer", nullable: false, comment: "Баланс"),
@@ -272,22 +273,22 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "DateCreate", "DateUpdate", "Description", "IsDeleted", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("023729fa-568d-477d-82d1-3fbc6c5adab0"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9125), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9127), "Лікарні, аптеки", false, "Здоров'я" },
-                    { new Guid("331e5a34-3604-4d7e-9dd1-1173bc7831fc"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9104), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9106), "Ремонт, ТО, заправка...", false, "Автомобіль" },
-                    { new Guid("45faa4a1-7125-4298-936b-fb257bca62f6"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9110), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9113), "Оплата тільки за одяг", false, "Одяг" },
-                    { new Guid("6b2875c6-f916-4eb6-b771-abe6127e5dc9"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9137), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9140), "Покупки для підвищення комфорту в житлі", false, "Житло" },
-                    { new Guid("8601aa6d-7848-4d3d-ad29-44b86bd7fa34"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9079), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9081), "Оплата за товари для харчування", false, "Харчування" },
-                    { new Guid("8749f0d9-831f-40a7-a194-a3aa14ac7f3b"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9073), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9074), "Електроенергія, тепло, ОСББ/ЖЕК, дофомон, ліфт, вода...", false, "Комунальні платежі" },
-                    { new Guid("96d40795-f07c-44ca-aeb9-28555a8923a2"), new DateTime(2025, 7, 1, 16, 45, 45, 680, DateTimeKind.Local).AddTicks(5673), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(7514), "Сплата громадського транспорту, таксі", false, "Транспорт" },
-                    { new Guid("b77bd731-6d99-4e67-a064-878f028228ae"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9118), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9120), "", false, "Краса та гігієна" },
-                    { new Guid("d2230919-65f7-42c5-84de-461863be61f2"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9085), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9087), "Оплата за одяг, або інші речі (КОМФІ, ТА-ДА, АВРОРА)", false, "Шопінг" },
-                    { new Guid("ee4189ed-7793-4d04-bb27-f8595197db21"), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9053), new DateTime(2025, 7, 1, 16, 45, 45, 682, DateTimeKind.Local).AddTicks(9066), "Сплата оренди за квартиру власнику", false, "Оренда квартири" }
+                    { new Guid("03a9ea38-0fbf-48b8-84ec-99dfe374b177"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5977), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5979), "Електроенергія, тепло, ОСББ/ЖЕК, дофомон, ліфт, вода...", false, "Комунальні платежі" },
+                    { new Guid("0e5fb646-bd11-4599-8101-1954e4cd6262"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6000), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6002), "Оплата за одяг, або інші речі (КОМФІ, ТА-ДА, АВРОРА)", false, "Шопінг" },
+                    { new Guid("205d8d6c-6626-4926-83db-7311180bffb1"), new DateTime(2025, 7, 2, 14, 13, 36, 320, DateTimeKind.Local).AddTicks(858), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(4498), "Сплата громадського транспорту, таксі", false, "Транспорт" },
+                    { new Guid("209f62a8-629b-4ec5-a1fd-5c4dd350c811"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6015), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6017), "Ремонт, ТО, заправка...", false, "Автомобіль" },
+                    { new Guid("23a87473-8a8d-45b0-b7c0-4a464b12701b"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6026), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6028), "", false, "Краса та гігієна" },
+                    { new Guid("357af260-56f7-4fd0-aa50-f0c64d08d863"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5959), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5972), "Сплата оренди за квартиру власнику", false, "Оренда квартири" },
+                    { new Guid("74ce8132-e7cf-46b8-afc0-ad628956efee"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6021), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6022), "Оплата тільки за одяг", false, "Одяг" },
+                    { new Guid("a4562db5-0230-4c4a-bdb2-e23c992d4714"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6039), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6041), "Покупки для підвищення комфорту в житлі", false, "Житло" },
+                    { new Guid("a6cf6e0e-13f3-4c5d-aadd-29f3f4ad177e"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5983), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(5985), "Оплата за товари для харчування", false, "Харчування" },
+                    { new Guid("edf5fee5-8ce9-4538-be11-2427a9691286"), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6032), new DateTime(2025, 7, 2, 14, 13, 36, 322, DateTimeKind.Local).AddTicks(6033), "Лікарні, аптеки", false, "Здоров'я" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Settings",
                 columns: new[] { "Id", "Type", "DateCreate", "DateUpdate", "Description", "IsDeleted", "Key", "Value" },
-                values: new object[] { new Guid("441f3b9e-c955-4ca8-b6c5-59a31d2893f9"), "String", new DateTime(2025, 7, 1, 16, 45, 45, 689, DateTimeKind.Local).AddTicks(6938), null, "Токен для інтеграції з монобанк", false, "MonoToken", "DefaultValue" });
+                values: new object[] { new Guid("441f3b9e-c955-4ca8-b6c5-59a31d2893f9"), "String", new DateTime(2025, 7, 2, 14, 13, 36, 329, DateTimeKind.Local).AddTicks(3159), null, "Токен для інтеграції з монобанк", false, "MonoToken", "DefaultValue" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_ClientId",
