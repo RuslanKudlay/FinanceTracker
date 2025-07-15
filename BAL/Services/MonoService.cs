@@ -4,6 +4,7 @@ using BAL.Services.Interfaces;
 using DAL;
 using DAL.DTOs.Mono;
 using DAL.Entities.Mono;
+using DAL.Exceptions;
 using FinanceTracking.Extentions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ public class MonoService : IMonoService
     {
         var httpClient = _httpClientFactory.CreateClient();
         var userId = _contextAccessor.GetUserId();
-        var myGroup = await _dbContext.UserFamilyGroups.FirstOrDefaultAsync(ufg => ufg.UserId == userId);
+        var myGroup = await _dbContext.UserFamilyGroups.FirstOrDefaultAsync(ufg => ufg.UserId == userId && ufg.FamilyGroup.Code != "Personal");
         var userGroups = await _dbContext.UserFamilyGroups.Where(ufg => ufg.FamilyGroupId == myGroup.FamilyGroupId).ToListAsync();
         var userGroupIds = userGroups.Select(ug => ug.UserId).ToList();
         var users = await _dbContext.Users.Where(u => userGroupIds.Contains(u.Id)).ToListAsync();
@@ -40,7 +41,7 @@ public class MonoService : IMonoService
         var settings = await _dbContext.UserSettings.Where(s => s.Key == "MonoToken" && userIds.Contains(s.UserId.Value)).ToListAsync();
 
         if (settings == null || settings.Count == 0)
-            return new List<Client>();
+            throw new CustomException("Потрібно встановити MonoToken!");
 
         var clients = new List<Client>();
 
