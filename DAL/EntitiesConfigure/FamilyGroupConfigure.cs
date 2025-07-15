@@ -15,8 +15,7 @@ public static class FamilyGroupConfigure
         modelBuilder.Entity<FamilyGroup>().Property(fg => fg.IsDeleted).HasColumnName("IsDeleted").HasComment("Прапор видалення");
         
         modelBuilder.Entity<FamilyGroup>().Property(fg => fg.Name).HasColumnName("Name").HasComment("Назва групи");
-
-        modelBuilder.Entity<FamilyGroup>()
-            .HasMany(fg => fg.Members);
+        modelBuilder.Entity<FamilyGroup>().Property(fg => fg.Code).HasColumnName("Code").HasComment("Код групи");
+        modelBuilder.Entity<FamilyGroup>().Property(fg => fg.IsEnabledGroup).HasColumnName("IsEnabledGroup").HasComment("Чи ввімкнена група");
     }
 }
