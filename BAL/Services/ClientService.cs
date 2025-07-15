@@ -1,6 +1,7 @@
 ﻿using BAL.Services.Interfaces;
 using DAL;
 using DAL.DTOs.Mono;
+using DAL.Entities;
 using DAL.Entities.Mono;
 using DAL.Exceptions;
 using FinanceTracking.Extentions;
@@ -42,28 +43,16 @@ public class ClientService : IClientService
             
             await _dbContext.SaveChangesAsync();
         }
+
+        var userIds = await GetReferralUserIds();
+        userIds.Add(_accessor.GetUserId().Value);
         
-        var familyUserIds = await GetFamilyUserIdsAsync();
-        var clients = await GetClientsWithAccountsAsync(familyUserIds);
+        var clients = await GetClientsWithAccountsAsync(userIds);
         var accounts = GetFilteredAccounts(clients, "black");
         
         var balance = BuildBalanceDto(clients, accounts);
         
         return balance;
-    }
-    
-    private async Task<List<Guid>> GetFamilyUserIdsAsync()
-    {
-        var group = await _dbContext.UserFamilyGroups
-            .FirstOrDefaultAsync(ug => ug.UserId == _accessor.GetUserId().Value);
-
-        if (group == null)
-            throw new CustomException("Сімейна група не знайдена");
-
-        return await _dbContext.UserFamilyGroups
-            .Where(g => g.FamilyGroupId == group.FamilyGroupId)
-            .Select(g => g.UserId)
-            .ToListAsync();
     }
     
     private async Task<List<Client>> GetClientsWithAccountsAsync(List<Guid> userIds)
@@ -72,6 +61,20 @@ public class ClientService : IClientService
             .Where(cl => userIds.Contains(cl.UserId) && cl.User.IsVisibleInGroup == true)
             .Include(cl => cl.Accounts)
             .ThenInclude(acc => acc.CardMaskedPans)
+            .ToListAsync();
+    }
+
+    private async Task<List<Guid>> GetReferralUserIds()
+    {
+        var userIds = await _dbContext.UserFamilyGroups
+            .Where(ufg => ufg.FamilyGroup.IsEnabledGroup == true && ufg.FamilyGroup.Code != "Personal")
+            .Select(ufg => ufg.UserId)
+            .ToListAsync();
+
+
+        return await _dbContext.Users
+            .Where(u => userIds.Contains(u.Id))
+            .Select(u => u.Id)
             .ToListAsync();
     }
     
