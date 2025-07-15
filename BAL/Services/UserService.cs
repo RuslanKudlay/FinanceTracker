@@ -36,7 +36,13 @@ public class UserService : IUserService//: BaseService<User, UserDto>, IUserServ
         }
 
         var hash = PasswordHesher.GetHash(dto.Password);
-        await _dbContext.Users.AddAsync(new User() { Email = dto.Email, PasswordHash = hash, FullName = dto.FullName, IsVisibleInGroup = true});
+
+        var userId = Guid.NewGuid();
+        var groupId = Guid.NewGuid();
+        
+        await _dbContext.FamilyGroups.AddAsync(new FamilyGroup() { Id = groupId, Name = "Моя персональная", Code = "Personal", DateCreate = DateTime.Now, IsDeleted = false});
+        await _dbContext.Users.AddAsync(new User() { Id = userId, Email = dto.Email, PasswordHash = hash, FullName = dto.FullName, IsVisibleInGroup = true});
+        await _dbContext.UserFamilyGroups.AddAsync(new UserFamilyGroup(){ UserId = userId, FamilyGroupId = groupId});
         return await _dbContext.SaveChangesAsync() > 0;
 
     }
